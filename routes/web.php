@@ -7,6 +7,7 @@ use App\http\Controllers\pembeliController;
 use App\http\Controllers\penjualController;
 use App\http\Controllers\barangController;
 use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\checkoutController;
 use Illuminate\Routing\Route as RoutingRoute;
 
 /*
@@ -54,9 +55,12 @@ Route::get('user/halamanUser', [userController::class, 'halamanUser'])->name('ha
 //Barang
 Route::get('Penjual/tambahbarang/tambahBarang', [barangController::class, 'HalamanTambahBarang'])->name('HalamanTambahBarang');
 Route::post('Penjual/tambahbarang/tambahBarang', [barangController::class, 'tambahBarang'])->name('tambahBarang');
-Route::get('/Transaksi/index', [barangController::class, 'search'])->name('search');
+Route::get('/transaksi/index', [barangController::class, 'search'])->name('search');
 //Keranjang
 
 Route::get('/keranjang', [KeranjangController::class, 'lihatKeranjang'])->name('keranjang.lihat');
-Route::post('/keranjang/tambah', [KeranjangController::class, 'tambahBarang'])->name('keranjang.tambah');
+Route::post('/keranjang/tambah', [KeranjangController::class, 'TambahKeKeranjang'])->name('TambahKeKeranjang');
 Route::post('/keranjang/hapus/{id}', [KeranjangController::class, 'hapusBarang'])->name('keranjang.hapus');
+
+//chechoutcontroller
+Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');

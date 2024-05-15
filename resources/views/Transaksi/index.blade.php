@@ -147,7 +147,7 @@
                 <p>Nama: {{ $barang->nama_barang }}</p>
                 <p style="color: red;">Harga: Rp {{ number_format($barang->harga_barang, 0, ',', '.') }}</p>
                     <p>Jumlah: {{ $barang->jumlah_barang }}</p>
-                    <form action="{{ route('keranjang.tambah') }}" method="POST">
+                    <form action="{{ route('TambahKeKeranjang') }}" method="POST">
     @csrf
     <input type="hidden" name="id" value="{{ $barang->id }}"> <!-- ID Barang Tersembunyi -->
     <label for="jumlah_barang">Jumlah Barang:</label>

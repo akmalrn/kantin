@@ -13,7 +13,7 @@ class Keranjang extends Model
 
     protected $fillable = [
         'id_barang',
-        'jumlah',
+        'jumlah_barang',
     ];
 
     // Jika Anda ingin mendefinisikan relasi dengan model Barang, Anda dapat melakukannya di sini

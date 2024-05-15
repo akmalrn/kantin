@@ -4,24 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Keranjang;
+use App\Models\Barang;
 
 class KeranjangController extends Controller
 {
-    public function tambahBarang(Request $request)
+    public function TambahKeKeranjang(Request $request)
     {
         // Validasi data yang dikirim
         $request->validate([
-            'barang_id' => 'required|exists:barangs,id',
-            'jumlah' => 'required|integer|min:1'
+            'id' => 'required|exists:barangs,id',
+            'jumlah_barang' => 'required|integer|min:1'
         ]);
 
-        // Tambahkan barang ke keranjang
+        // Buat data keranjang baru
         Keranjang::create([
-            'barang_id' => $request->barang_id,
-            'jumlah' => $request->jumlah
+            'id_barang' => $request->id,
+            'jumlah_barang' => $request->jumlah_barang
         ]);
 
-        return redirect()->route('keranjang.lihat')->with('success', 'Barang berhasil ditambahkan ke keranjang.');
+        return redirect()->back()->with('success', 'Barang berhasil ditambahkan ke keranjang.');
     }
 
     public function hapusBarang($id)
@@ -35,8 +36,8 @@ class KeranjangController extends Controller
     public function lihatKeranjang()
     {
         // Ambil data keranjang
+        $barangs = Barang::all();
         $keranjang = Keranjang::all();
-
-        return view('keranjang.index', compact('keranjang'));
+        return view('keranjang.index', compact('barangs','keranjang'));
     }
 }
