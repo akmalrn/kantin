@@ -95,8 +95,11 @@
     </tr>
 
     <tr>
-        <td><label for="jk_penjual">Jenis Kelamin:</label></td>
-        <td><input type="text" name="jk_penjual" id="jk_penjual" required></td>
+    <td><label for="jk_penjual">Jenis Kelamin:</label></td>
+    <td><select name="jk_penjual" id="jk_penjual">
+           <option value="Laki-laki">Laki-laki</option>
+           <option value="Perempuan">Perempuan</option>
+            </select></td>
     </tr>
 
 

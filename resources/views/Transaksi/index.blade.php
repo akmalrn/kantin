@@ -103,14 +103,36 @@
              /* Tinggi gambar akan disesuaikan agar proporsi tetap */
 }
 .search-form {
-            position: absolute;
-            top: 10px; /* Atur jarak dari atas */
-            right: 10px; /* Atur jarak dari kanan */
-            display: flex;
-            align-items: center;
+    position: absolute;
+    top: 0px; /* Distance from the top */
+    left: 0%; /* Move to the middle of the page */
+    transform: translateX(-80%); /* Center align */
+    display: flex;
+    align-items: center;
+    width: 100%; /* Adjust the width as needed */
+}
+
+.search-form input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px; /* Space between input and button */
+    width: 100%;
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+        .keranjang {
+            position: fixed;
+            top: 20%;
+            right: 10px;
         }
-        .search-form input[type="text"] {
-            margin-right: 10px; /* Spasi antara input dan tombol */
+
+        .keranjang a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .keranjang a:hover {
+            color: #337ab7;
         }
     </style>
 </head>
@@ -127,14 +149,23 @@
 </script>
 
 <header>
+
+
     <div>@ Amay Kantin</div>
     <nav>
         <a href="{{ route('HalamanLoginPembeli') }}">Login Pembeli</a>
     </nav>
 </header>
+
+<div class="keranjang">
+    <a href="{{ route('HalamanKeranjang') }}">
+    Keranjang
+    </a>
+</div>
+
 <form action="{{ route('search') }}" method="GET" class="search-form" style="margin: 5% 80% 0px ;">
     <input type="text" name="search" placeholder="Cari Nama Produk">
-    <button type="submit">Cari</button></form>
+    <button type="submit" style="background-color:#FFA500; font-size:x-large">Cari</button></form>
 <div class="content">
     <div class="container">
         <h1>Kantin Amay</h1>
@@ -143,19 +174,23 @@
             <div class="barang-item">
                 <img src="{{ asset('storage/images/' . $barang->image) }}" alt="{{ $barang->nama_barang }}" class="img_thumbnail" onclick="toggleDeskripsi(this)">
                 <div class="barang-info">
-                <p>ID Pemasok: {{ $barang->id_penjual }}</p>
                 <p>Nama: {{ $barang->nama_barang }}</p>
+                <p>ID Pemasok: {{ $barang->id_penjual }}</p>
                 <p style="color: red;">Harga: Rp {{ number_format($barang->harga_barang, 0, ',', '.') }}</p>
                     <p>Jumlah: {{ $barang->jumlah_barang }}</p>
                     <form action="{{ route('TambahKeKeranjang') }}" method="POST">
     @csrf
+</div>
+<div>
+<p>Nama: {{ $barang->nama_barang }}</p>
+<label for="jumlah_barang">Jumlah Barang:</label>
+</div>
+
     <input type="hidden" name="id" value="{{ $barang->id }}"> <!-- ID Barang Tersembunyi -->
-    <label for="jumlah_barang">Jumlah Barang:</label>
     <input type="number" name="jumlah_barang" id="jumlah_barang">
     <button type="submit">Tambah ke Keranjang</button>
 </form>
                 </div>
-            </div>
             @endforeach
         </div>
     </div>
@@ -168,6 +203,7 @@
 </div>
 <footer>
     Hak Cipta &copy; Kantin Amay 2024.
+
 
 </footer>
 </body>

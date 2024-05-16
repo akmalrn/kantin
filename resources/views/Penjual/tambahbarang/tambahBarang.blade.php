@@ -53,7 +53,7 @@ select {
 button[type="submit"] {
     width: 50%;
     padding: 10px;
-    background-color: #4caf50;
+    background-color: red;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -65,19 +65,41 @@ button[type="submit"]:hover {
     background-color: #45a049;
 }
 footer{background-color: #FFA500;
-                    padding: 20px;
+                    padding: 10px;
                     position: fixed;
                             bottom: 0;
                         width: 100%;}
 
                     header{background-color: #FFA500;
-                    padding: 20px;
+                    padding: 10px;
                             top: 0;
                         width: 100%;}
 
+            .home{
+            position: fixed;
+            top: 8%;
+            left: 1%;
+            color: white;
+            background-color: red;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .arrowleft{
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        display: inline-block;
+        padding: 3px;
+        transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+        }       
     </style>
 </head>
 <body>
+
+<div  class="home" >
+        <a href="{{ route('Pembelian') }}"><i class="arrowleft"></i></a>
+        </div>  
+
 <header>@ Amay Kantin</header>
     <h1>Tambah Barang</h1>
     @if ($errors->any())
@@ -123,8 +145,8 @@ footer{background-color: #FFA500;
             <label for="jumlah_barang">Jumlah Barang:</label>
             <input type="number" id="jumlah_barang" name="jumlah_barang" value="{{ old('jumlah_barang') }}" required>
         </div>
-        <div>
-            <button type="submit">Simpan</button>
+        <div style="text-align: center;">
+            <button type="submit" onclick="return confirm('Apakah Anda Sudah Benar??')" >Simpan</button>
         </div>
     </form>
 </body>

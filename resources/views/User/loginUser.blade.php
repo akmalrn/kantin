@@ -3,6 +3,9 @@
     <title>Halaman Login Admin</title>
     <style>
         body {
+            background-image: url('/gambar/Foto Amay.jpg');
+        background-size: 100% 100%;
+            background-position: center;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -54,16 +57,20 @@
             background-color: #45a049;
         }
 
-        footer{background-color: #FFA500;
-                    padding: 20px;
-                    position: fixed;
-                            bottom: 0;
-                        width: 100%;}
+        footer{
+                background-color: #FFA500;
+                padding: 5px;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                text-align: center;}
 
-                    header{background-color: #FFA500;
-                    padding: 20px;
-                            top: 0;
-                        width: 100%;}
+         header{
+                background-color: #FFA500;
+                text-align: center;
+                padding: 5px;
+                top: 0;
+                width: 100%;}
     </style>
 </head>
 <body>

@@ -88,8 +88,11 @@
     </tr>
 
     <tr>
-        <td><label for="jk_pembeli">Jenis Kelamin:</label></td>
-        <td><input type="text" name="jk_pembeli" id="jk_pembeli" required></td>
+    <td><label for="jk_pembeli">Jenis Kelamin:</label></td>
+    <td><select name="jk_pembeli" id="jk_pembeli">
+           <option value="Laki-laki">Laki-laki</option>
+           <option value="Perempuan">Perempuan</option>
+            </select></td>
     </tr>
 
 

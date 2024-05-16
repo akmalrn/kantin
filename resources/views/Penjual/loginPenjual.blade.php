@@ -69,7 +69,7 @@
                     top: 0;
                     width: 100%;}
 
-                        .home{
+            .home{
             position: fixed;
             top: 5%;
             left: 1%;

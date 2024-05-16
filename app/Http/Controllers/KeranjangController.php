@@ -33,11 +33,28 @@ class KeranjangController extends Controller
         return redirect()->route('keranjang.lihat')->with('success', 'Barang berhasil dihapus dari keranjang.');
     }
 
-    public function lihatKeranjang()
+    public function HalamanKeranjang()
     {
         // Ambil data keranjang
         $barangs = Barang::all();
         $keranjang = Keranjang::all();
-        return view('keranjang.index', compact('barangs','keranjang'));
+        return view('keranjang/index', compact('barangs','keranjang'));
+    }
+
+    public function destroy($id)
+    {
+        // Ambil data keranjang dari sesi
+        $keranjang = session()->get('keranjang', []);
+
+        // Filter keranjang untuk menghapus barang yang dihapus
+        $newKeranjang = array_filter($keranjang, function($item) use ($id) {
+            return $item['id_barang'] != $id;
+        });
+
+        // Update sesi dengan keranjang baru
+        session()->put('keranjang', $newKeranjang);
+
+        // Redirect ke halaman keranjang dengan pesan sukses
+        return redirect()->route('HalamanKeranjang')->with('success', 'Barang berhasil dihapus dari keranjang');
     }
 }

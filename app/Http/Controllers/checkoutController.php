@@ -8,47 +8,28 @@ use App\Models\Penjual;
 
 class checkoutController extends Controller
 {
-    public function index()
-    {
-     // Ambil data keranjang belanja dari sesi
-     $keranjang = Session::get('keranjang');
-    
-     // Tampilkan halaman checkout dan kirimkan data keranjang belanja
-     return view('checkout', compact('keranjang'));
-}
-public function checkout(Request $request)
-{
-    // Ambil semua barang yang ada di keranjang dari session
-    $keranjang = $request->session()->get('keranjang');
-
-    // Pastikan keranjang tidak kosong sebelum melakukan iterasi
-    if (!$keranjang) {
-        return redirect()->back()->with('error', 'Keranjang belanja kosong.');
+    public function HalamanCheckout(){
+        return view('Keranjang/checkout');
     }
 
-    // Lakukan iterasi untuk mengurangi jumlah_barang barang di tabel 'barangs'
-    foreach ($keranjang as $item) {
-        // Ambil barang dari database berdasarkan ID
-        $barang = Barang::find($item['id_barang']);
-        
-        // Validasi apakah barang ditemukan
-        if (!$barang) {
-            return redirect()->back()->with('error', 'Barang tidak ditemukan.');
+    public function process(Request $request)
+    {
+        // Ambil semua barang yang ada di keranjang
+        $keranjang = $request->session()->get('keranjang', []);
+
+        // Lakukan iterasi untuk mengurangi stok barang di tabel 'barangs'
+        foreach ($keranjang as $item) {
+            $barang = Barang::find($item['id_barang']);
+            // Kurangi stok barang sesuai dengan jumlah yang dibeli
+            $barang->stok -= $item['jumlah_barang'];
+            $barang->save();
         }
 
-        // Kurangi jumlah_barang barang sesuai dengan jumlah yang dibeli
-        $barang->jumlah_barang -= $item['jumlah_barang'];
-        
-        // Simpan perubahan pada jumlah_barang barang
-        $barang->save();
+        // Setelah mengurangi stok barang, kosongkan keranjang belanja
+        $request->session()->forget('keranjang');
+
+        // Redirect atau tampilkan halaman sukses pembayaran
+        return redirect()->route('HalamanCheckout')->with('success', 'Pembayaran berhasil!');
     }
-
-    // Setelah mengurangi jumlah_barang barang, kosongkan keranjang belanja
-    $request->session()->forget('keranjang');
-
-    // Redirect atau tampilkan halaman sukses pembayaran
-    return redirect()->route('suksesPembayaran')->with('success', 'Pembayaran berhasil.');
-}
-
     
 }

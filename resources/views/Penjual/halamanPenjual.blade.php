@@ -120,7 +120,7 @@
     <body>
             <header>@ Amay Kantin
             <div class="logout">
-            <a href="{{ route('HalamanLoginPenjual') }}" >Logout</a>
+            <a href="{{ route('HalamanLoginPenjual') }}" onclick="return confirm('Apakah Anda Yakin Ingin Log Out')" >Logout</a>
         </div>
             </header>
             <h2>Penjual</h2>
@@ -135,7 +135,6 @@
                     <th>Harga</th>
                     <th>Jumlah</th>
                     <th>Gambar</th>
-                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody style="text-align: center;">
@@ -147,9 +146,7 @@
                     <td>Rp {{ number_format($barang->harga_barang, 0, ',', '.') }}</td>
                     <td>{{ $barang->jumlah_barang }}</td>
                     <td><img src="{{ asset('/storage/images/' . $barang->image) }}" alt="{{ $barang->nama_barang }}" class="img_thumbnail"></td>
-                    <td class="actions">
-                        
-                    </td>
+                    
                 </tr>
                 @endforeach
             </tbody>

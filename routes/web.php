@@ -51,16 +51,29 @@ Route::post('user/registrasiUser', [userController::class, 'registrasiUser']);
 Route::get('user/loginUser', [userController::class, 'HalamanLoginUser'])->name('HalamanLoginUser');
 Route::post('user/loginUser', [userController::class, 'loginUser']);
 Route::get('user/halamanUser', [userController::class, 'halamanUser'])->name('halamanUser');
+Route::delete('/halamanUser/{barang}', [UserController::class, 'barangdestroy'])->name('barangdestroy');
+Route::delete('/halamanUser/{penjual}', [UserController::class, 'penjualdestroy'])->name('penjualdestroy');
+Route::delete('/halamanUser/{pembeli}', [UserController::class, 'pembelidestroy'])->name('pembelidestroy');
 
 //Barang
 Route::get('Penjual/tambahbarang/tambahBarang', [barangController::class, 'HalamanTambahBarang'])->name('HalamanTambahBarang');
 Route::post('Penjual/tambahbarang/tambahBarang', [barangController::class, 'tambahBarang'])->name('tambahBarang');
 Route::get('/transaksi/index', [barangController::class, 'search'])->name('search');
+Route::delete('/barang/{id}', [BarangController::class, 'destroy'])->name('destroy');
+
 //Keranjang
+Route::get('/keranjang/index', [KeranjangController::class, 'HalamanKeranjang'])->name('HalamanKeranjang');
+Route::post('/keranjang/index/tambah', [KeranjangController::class, 'TambahKeKeranjang'])->name('TambahKeKeranjang');
+Route::delete('/keranjang/{id}', [KeranjangController::class, 'destroy'])->name('keranjang.destroy');
+Route::post('/keranjang/index', [KeranjangController::class, 'destroy'])->name('Keranjang.destroy');
 
-Route::get('/keranjang', [KeranjangController::class, 'lihatKeranjang'])->name('keranjang.lihat');
-Route::post('/keranjang/tambah', [KeranjangController::class, 'TambahKeKeranjang'])->name('TambahKeKeranjang');
-Route::post('/keranjang/hapus/{id}', [KeranjangController::class, 'hapusBarang'])->name('keranjang.hapus');
+//checkoutcontroller
+Route::post('/Keranjang/suksesPembayaran', [CheckoutController::class, 'HalamanCheckout'])->name('HalamanCheckout');
+Route::get('/Keranjang/suksesPembayaran', [CheckoutController::class, 'process'])->name('process');
+Route::get('/sukses-pembayaran', function() {
+    return view('sukses-pembayaran');
+})->name('suksesPembayaran');
 
-//chechoutcontroller
-Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+//test
+Route::delete('/keranjang/{id}', [KeranjangController::class, 'destroy'])->name('keranjang.destroy');
+Route::delete('/keranjang/{id}', [barangController::class, 'destroy'])->name('destroy');
