@@ -25,14 +25,6 @@ class KeranjangController extends Controller
         return redirect()->back()->with('success', 'Barang berhasil ditambahkan ke keranjang.');
     }
 
-    public function hapusBarang($id)
-    {
-        // Hapus barang dari keranjang
-        Keranjang::findOrFail($id)->delete();
-
-        return redirect()->route('keranjang.lihat')->with('success', 'Barang berhasil dihapus dari keranjang.');
-    }
-
     public function HalamanKeranjang()
     {
         // Ambil data keranjang
@@ -41,20 +33,18 @@ class KeranjangController extends Controller
         return view('keranjang/index', compact('barangs','keranjang'));
     }
 
-    public function destroy($id)
+    public function destroyKeranjang($id)
     {
-        // Ambil data keranjang dari sesi
-        $keranjang = session()->get('keranjang', []);
+        // Cari item keranjang berdasarkan ID
+        $keranjangItem = Keranjang::find($id);
 
-        // Filter keranjang untuk menghapus barang yang dihapus
-        $newKeranjang = array_filter($keranjang, function($item) use ($id) {
-            return $item['id_barang'] != $id;
-        });
-
-        // Update sesi dengan keranjang baru
-        session()->put('keranjang', $newKeranjang);
-
-        // Redirect ke halaman keranjang dengan pesan sukses
-        return redirect()->route('HalamanKeranjang')->with('success', 'Barang berhasil dihapus dari keranjang');
+        // Periksa apakah item keranjang ditemukan
+        if ($keranjangItem) {
+            // Hapus item keranjang
+            $keranjangItem->delete();
+            return redirect()->back()->with('success', 'Item berhasil dihapus dari keranjang.');
+        } else {
+            return redirect()->back()->with('error', 'Item tidak ditemukan.');
+        }
     }
 }

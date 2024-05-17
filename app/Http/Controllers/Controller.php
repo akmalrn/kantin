@@ -20,9 +20,5 @@ class Controller extends BaseController
         $barangs = Barang::all(); // Ambil semua data barang
         return view('Transaksi.index', compact('barangs')); 
     }
-    public function keranjang(){
-        $barangs = Barang::all(); // Ambil semua data barang
-        return view('Transaksi/keranjang', compact('barangs')); 
-    }
 }
 

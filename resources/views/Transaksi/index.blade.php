@@ -134,6 +134,13 @@
         .keranjang a:hover {
             color: #337ab7;
         }
+
+        .img_thumbnail {
+            width: 100%;
+            height: 50%;
+            object-fit: cover;
+             /* Tinggi gambar akan disesuaikan agar proporsi tetap */
+}
     </style>
 </head>
 <body>
@@ -169,10 +176,11 @@
 <div class="content">
     <div class="container">
         <h1>Kantin Amay</h1>
+        <h6 style="color: red;">*Untuk detail lebih anda bisa klik gambarnya</h6>
         <div class="barang">
             @foreach($barangs as $barang)
             <div class="barang-item">
-                <img src="{{ asset('storage/images/' . $barang->image) }}" alt="{{ $barang->nama_barang }}" class="img_thumbnail" onclick="toggleDeskripsi(this)">
+                <img src="{{ asset('storage/images/' . $barang->image) }}" alt="{{ $barang->nama_barang }}" class="img_thumbnail" onclick="toggleDeskripsi(this)" class="img_thumbnail">
                 <div class="barang-info">
                 <p>Nama: {{ $barang->nama_barang }}</p>
                 <p>ID Pemasok: {{ $barang->id_penjual }}</p>
@@ -182,7 +190,6 @@
     @csrf
 </div>
 <div>
-<p>Nama: {{ $barang->nama_barang }}</p>
 <label for="jumlah_barang">Jumlah Barang:</label>
 </div>
 

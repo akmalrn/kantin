@@ -51,19 +51,23 @@ class pembeliController extends Controller
             'nama_pembeli' => 'required|string',
             'password_pembeli' => 'required|string',
         ]);
-
-        $credentials = $request->only('nama_pembeli', 'password_pembeli');
-
-        $pembeli = pembeli::where('nama_pembeli', $request->nama_pembeli)->first();
-
-    $pembeli = pembeli::where('nama_pembeli', $request->nama_pembeli)->first();
-
-    if ($pembeli && Hash::check($request->password_pembeli, $pembeli->password_pembeli)) {
-        Auth::login($pembeli);
-
-        return redirect()->route('Pembelian');
-    }
-
-    return redirect()->back()->withErrors(['loginError' => 'Nama pembeli atau password salah.']);
+    
+        // Cari pembeli berdasarkan nama
+        $pembeli = Pembeli::where('nama_pembeli', $request->nama_pembeli)->first();
+    
+        // Jika pembeli ditemukan dan kata sandi cocok
+        if ($pembeli && Hash::check($request->password_pembeli, $pembeli->password_pembeli)) {
+            // Lakukan login pembeli
+            Auth::login($pembeli);
+    
+            // Ambil ID pembeli setelah login
+            $id_pembeli = $pembeli->id;
+    
+            // Redirect ke halaman pembeli dengan membawa ID pembeli
+            return redirect()->route('Pembelian', ['id' => $id_pembeli]);
+        }
+    
+        // Jika nama pembeli atau kata sandi salah, kembalikan ke halaman login dengan pesan error
+        return redirect()->back()->withErrors(['loginError' => 'Nama pembeli atau password salah.']);
     }
 }

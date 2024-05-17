@@ -133,6 +133,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>ID Penjual</th>
                     <th>Nama Barang</th>
                     <th>Jenis Barang</th>
@@ -145,6 +146,7 @@
             <tbody>
                 @foreach($barangs as $barang)
                 <tr>
+                    <td>{{ $barang->id }}</td>
                     <td>{{ $barang->id_penjual }}</td>
                     <td>{{ $barang->nama_barang }}</td>
                     <td>{{ $barang->jenis_barang }}</td>
@@ -155,7 +157,7 @@
                         <form style="display: inline-block;" action="{{ route('barangdestroy', $barang->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button class="delete" type="submit" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data {{ $barang->nama_lengkap}}?');">Hapus</button>
+                            <button class="delete" type="submit" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data Nama {{ $barang->nama_barang}}?');">Hapus</button>
                         </form>
                 </tr>
                 @endforeach
@@ -186,7 +188,7 @@
                         <form style="display: inline-block;" action="{{ route('pembelidestroy', $pembeli->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button class="delete" type="submit" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data {{ $barang->nama_lengkap}}?');">Hapus</button>
+                            <button class="delete" type="submit" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data ID Pembeli {{ $pembeli->id}}?');">Hapus</button>
                         </form>
                 </tr>
                 @endforeach
@@ -218,7 +220,7 @@
                         <form style="display: inline-block;" action="{{ route('penjualdestroy', $penjual->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button class="delete" type="submit" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data {{ $barang->nama_lengkap}}?');">Hapus</button>
+                            <button class="delete" type="submit" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data ID Penjual {{ $penjual->id}}?');">Hapus</button>
                         </form>
                 </tr>
                 @endforeach

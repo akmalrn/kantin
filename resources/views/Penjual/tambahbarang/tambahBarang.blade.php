@@ -97,7 +97,7 @@ footer{background-color: #FFA500;
 <body>
 
 <div  class="home" >
-        <a href="{{ route('Pembelian') }}"><i class="arrowleft"></i></a>
+        <a href="{{ route('halamanPenjual') }}"><i class="arrowleft"></i></a>
         </div>  
 
 <header>@ Amay Kantin</header>

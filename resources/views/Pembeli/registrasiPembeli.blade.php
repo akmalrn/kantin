@@ -1,5 +1,8 @@
 <style>
         body {
+            background-image: url('/gambar/Foto Amay.jpg');
+        background-size: 100% 100%;
+            background-position: center;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -51,18 +54,39 @@
             background-color: #45a049;
         }
         footer{background-color: #FFA500;
-                    padding: 20px;
+                    padding: 5px;
+                    text-align: center;
                     position: fixed;
                             bottom: 0;
                         width: 100%;}
 
                     header{background-color: #FFA500;
-                    padding: 20px;
+                    padding: 5px;
+                    text-align: center;
                             top: 0;
                         width: 100%;}
+            .home{
+            position: fixed;
+            top: 7%;
+            left: 1%;
+            color: white;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .arrowleft{
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        display: inline-block;
+        padding: 3px;
+        transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+        } 
 </style>
 
 <header>@ Amay Kantin</header>
+<div  class="home" >
+        <a href="{{ route('halamanUser') }}"><i class="arrowleft"></i></a>
+        </div>  
 <form method="POST" action="{{ route('HalamanRegistrasiPembeli') }}">
     <table>
     @csrf

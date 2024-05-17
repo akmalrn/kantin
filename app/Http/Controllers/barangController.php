@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Barang;
 use App\Models\Penjual;
 
+
 class barangController extends Controller
 {
     public function search(Request $request)
@@ -34,7 +35,7 @@ class barangController extends Controller
         $request->validate([
             'jenis_barang' => 'required|string',
             'nama_barang' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1999',
             'harga_barang' => 'required|numeric',
             'jumlah_barang' => 'required|integer',
         ]);

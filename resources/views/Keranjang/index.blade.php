@@ -105,40 +105,42 @@
         <a href="{{ route('Pembelian') }}"><i class="arrowleft"></i></a>
         </div> 
         <form action="{{ route('process') }}" method="POST">
-            @csrf
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nama Barang</th>
-                        <th>Harga</th>
-                        <th>Jumlah</th>
-                        <th>Total</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($keranjang as $item)
-                        @php
-                            $barang = \App\Models\Barang::find($item['id_barang']);
-                        @endphp
-                        <tr>
-                            <td>{{ $barang->nama_barang }}</td>
-                            <td>Rp {{ number_format($barang->harga_barang, 0, ',', '.') }}</td>
-                            <td>{{ $item['jumlah_barang'] }}</td>
-                            <td>Rp {{ number_format($barang->harga_barang * $item['jumlah_barang'], 0, ',', '.') }}</td>
-                            <td>
-                                <form style="display: inline-block;" action="{{ route('destroy', $item['id']) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus {{ $barang->nama_barang }}?');">Hapus</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <button type="submit" class="btn btn-primary">Checkout</button>
-        </form>
+    @csrf
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nama Barang</th>
+                <th>Harga</th>
+                <th>Jumlah</th>
+                <th>Total</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($keranjang as $item)
+                @php
+                    $keranjang = \App\Models\Keranjang::find($item['id']);
+                    $barang = \App\Models\Barang::find($item['id_barang']);
+                @endphp
+                <tr>
+                    <td>{{ $barang->nama_barang }}</td>
+                    <td>Rp {{ number_format($barang->harga_barang, 0, ',', '.') }}</td>
+                    <td>{{ $item['jumlah_barang'] }}</td>
+                    <td>Rp {{ number_format($barang->harga_barang * $item['jumlah_barang'], 0, ',', '.') }}</td>
+                    <td>
+                        <form style="display: inline-block;" action="{{ route('keranjangdestroy', $keranjang->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus {{ $barang->nama_barang }}?');">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">Checkout</button>
+</form>
+
     @endif
 </div>
 </body>

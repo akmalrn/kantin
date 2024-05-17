@@ -8,8 +8,8 @@ use App\Models\Penjual;
 
 class checkoutController extends Controller
 {
-    public function HalamanCheckout(){
-        return view('Keranjang/checkout');
+    public function HalamanSuksesPembayaran(){
+        return view('Keranjang/suksesPembayaran');
     }
 
     public function process(Request $request)
@@ -21,7 +21,7 @@ class checkoutController extends Controller
         foreach ($keranjang as $item) {
             $barang = Barang::find($item['id_barang']);
             // Kurangi stok barang sesuai dengan jumlah yang dibeli
-            $barang->stok -= $item['jumlah_barang'];
+            $barang->jumlah_barang -= $item['jumlah_barang'];
             $barang->save();
         }
 
@@ -29,7 +29,7 @@ class checkoutController extends Controller
         $request->session()->forget('keranjang');
 
         // Redirect atau tampilkan halaman sukses pembayaran
-        return redirect()->route('HalamanCheckout')->with('success', 'Pembayaran berhasil!');
+        return redirect()->route('HalamanKeranjang')->with('success', 'Pembayaran berhasil!');
     }
     
 }

@@ -29,8 +29,6 @@ Route::get('/', function () {
 // web.php
 Route::get('/Transaksi', [Controller::class, 'welcome'])->name('Pembelian');
 Route::get('/Transaksi', [Controller::class, 'index'])->name('Pembelian');
-Route::get('/Transaksi/keranjang', [Controller::class, 'keranjang'])->name('keranjang');
-Route::post('/Transaksi/keranjang', [Controller::class, 'keranjang']);
 
 //loginPembeli
 Route::get('Pembeli/registrasiPembeli', [pembeliController::class, 'HalamanRegistrasiPembeli'])->name('HalamanRegistrasiPembeli');
@@ -64,16 +62,14 @@ Route::delete('/barang/{id}', [BarangController::class, 'destroy'])->name('destr
 //Keranjang
 Route::get('/keranjang/index', [KeranjangController::class, 'HalamanKeranjang'])->name('HalamanKeranjang');
 Route::post('/keranjang/index/tambah', [KeranjangController::class, 'TambahKeKeranjang'])->name('TambahKeKeranjang');
-Route::delete('/keranjang/{id}', [KeranjangController::class, 'destroy'])->name('keranjang.destroy');
-Route::post('/keranjang/index', [KeranjangController::class, 'destroy'])->name('Keranjang.destroy');
+Route::delete('/keranjang/{id}', [KeranjangController::class, 'destroyKeranjang'])->name('keranjangdestroy');
 
 //checkoutcontroller
-Route::post('/Keranjang/suksesPembayaran', [CheckoutController::class, 'HalamanCheckout'])->name('HalamanCheckout');
+Route::post('/Keranjang/suksesPembayaran', [CheckoutController::class, 'HalamanSuksesPembayaran'])->name('HalamanSuksesPembayaran');
 Route::get('/Keranjang/suksesPembayaran', [CheckoutController::class, 'process'])->name('process');
-Route::get('/sukses-pembayaran', function() {
-    return view('sukses-pembayaran');
+Route::get('/suksesPembayaran', function() {
+    return view('suksesPembayaran');
 })->name('suksesPembayaran');
 
 //test
-Route::delete('/keranjang/{id}', [KeranjangController::class, 'destroy'])->name('keranjang.destroy');
-Route::delete('/keranjang/{id}', [barangController::class, 'destroy'])->name('destroy');
+

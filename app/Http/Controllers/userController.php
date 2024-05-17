@@ -53,20 +53,19 @@ class userController extends Controller
     }
 
     public function halamanUser()
-    {
-        $penjuals = Penjual::all();
-        $barangs = Barang::all();
-        $pembelis = Pembeli::all();
-        return view('user/halamanUser', compact('penjuals', 'barangs', 'pembelis'));
+{
+    // Periksa apakah pengguna telah login
+    if (!Auth::check()) {
+        return redirect()->route('HalamanLoginUser')->with('error', 'Anda harus login terlebih dahulu.');
     }
+    $userId = Auth::id();
+    // Jika pengguna telah login, dapatkan data yang diperlukan dan tampilkan halaman
+    $penjuals = Penjual::all();
+    $barangs = Barang::all();
+    $pembelis = Pembeli::all();
+    return view('user/halamanUser', compact('penjuals', 'barangs', 'pembelis'));
+}
 
-    public function halamanuser2(){
-
-    }
-
-    public function halamanuser3(){
-        
-    }
 
     public function barangdestroy(Barang $barang)
     {
