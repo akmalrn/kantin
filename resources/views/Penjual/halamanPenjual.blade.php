@@ -114,10 +114,40 @@
 
                             h2{padding:20px;background-color: white; text-align: center;}
 
-                           
+    .home {
+        position: fixed;
+        left: 2%;
+        top: 8%;
+        padding: 10px;
+        background-color: #337ab7;
+        border-radius: 10%;
+        color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 10px;
+        height: 10px;
+    }
+
+    .arrowleft {
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        display: inline-block;
+        padding: 5px;
+        transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+        width: 2px;
+        height: 2px;
+    }
         </style>
     </head>
     <body>
+    @if (Auth::check() && Auth::user()->role == 'admin')
+    <div class="home">
+        <a href="{{ route('halamanUser') }}"><i class="arrowleft"></i></a>
+    </div>
+@endif
             <header>@ Amay Kantin
             <div class="logout">
             <a href="{{ route('HalamanLoginPenjual') }}" onclick="return confirm('Apakah Anda Yakin Ingin Log Out')" >Logout</a>

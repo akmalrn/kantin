@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Keranjang Belanja</title>
     <style>
         .container {
@@ -128,11 +129,7 @@
                     <td>{{ $item['jumlah_barang'] }}</td>
                     <td>Rp {{ number_format($barang->harga_barang * $item['jumlah_barang'], 0, ',', '.') }}</td>
                     <td>
-                        <form style="display: inline-block;" action="{{ route('keranjangdestroy', $keranjang->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus {{ $barang->nama_barang }}?');">Hapus</button>
-                        </form>
+                        <button type="button" class="btn btn-danger btn-sm" id="delete-data-{{ $keranjang->id }}" value="{{ $keranjang->id }}" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data Nama {{ $barang->nama_barang}}?');">Hapus</button>
                     </td>
                 </tr>
             @endforeach
@@ -144,4 +141,30 @@
     @endif
 </div>
 </body>
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
+<script>
+    $(() => {
+        $('[id*=delete-data-]').click(function (e) {
+            e.preventDefault();
+
+            let value = $(this).val();
+            let token = $("meta[name='csrf-token']").attr("content");
+            $.ajax({
+                url:"{{ route('destroyKeranjang', $keranjang->id) }}",
+                type: "DELETE",
+                data: {
+                    '_token': token
+                },
+                success: function () {
+                    console.log('Berhasil');
+                }
+            })
+        })
+    });
+
+    
+</script>
 </html>

@@ -13,7 +13,7 @@ class Penjual extends Authenticatable implements AuthenticatableContract
 {
     use Notifiable;
 
-    protected $table = 'table_penjual';
+    protected $table = 'penjuals';
 
     // Kolom yang dapat diisi secara massal
     protected $fillable = [

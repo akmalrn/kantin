@@ -12,6 +12,8 @@ class Pembeli extends Authenticatable implements AuthenticatableContract
 {
     use Notifiable;
 
+    
+
     protected $table = 'table_pembeli';
 
     // Kolom yang dapat diisi secara massal

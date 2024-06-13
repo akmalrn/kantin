@@ -4,7 +4,7 @@
     <style>
         body {
             background-image: url('/gambar/Foto Amay.jpg');
-        background-size: 100% 100%;
+            background-size: 100% 100%;
             background-position: center;
             font-family: Arial, sans-serif;
             margin: 0;

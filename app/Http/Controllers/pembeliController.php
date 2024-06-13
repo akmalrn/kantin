@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Pembeli;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -47,27 +47,29 @@ class pembeliController extends Controller
 
     public function loginPembeli(Request $request)
     {
-        $request->validate([
-            'nama_pembeli' => 'required|string',
-            'password_pembeli' => 'required|string',
-        ]);
-    
-        // Cari pembeli berdasarkan nama
-        $pembeli = Pembeli::where('nama_pembeli', $request->nama_pembeli)->first();
-    
-        // Jika pembeli ditemukan dan kata sandi cocok
-        if ($pembeli && Hash::check($request->password_pembeli, $pembeli->password_pembeli)) {
-            // Lakukan login pembeli
-            Auth::login($pembeli);
-    
-            // Ambil ID pembeli setelah login
-            $id_pembeli = $pembeli->id;
-    
-            // Redirect ke halaman pembeli dengan membawa ID pembeli
-            return redirect()->route('Pembelian', ['id' => $id_pembeli]);
+        {
+            $request->validate([
+                'email' => 'required|string|email',
+                'password' => 'required|string',
+            ]);
+        
+            // Cari user berdasarkan email
+            $user = User::where('email', $request->email)->first();
+        
+            // Jika user ditemukan dan password cocok
+            if ($user && Hash::check($request->password, $user->password)) {
+                // Lakukan login user
+                Auth::login($user);
+        
+                // Ambil ID user setelah login
+                $id_user = $user->id;
+        
+                // Redirect ke halaman pembelian setelah login
+                return redirect()->route('Pembelian', ['id' => $id_user]);
+            }
+        
+            // Jika email atau password salah, kembalikan ke halaman login dengan pesan error
+            return back()->with('error', 'Invalid credentials');
         }
-    
-        // Jika nama pembeli atau kata sandi salah, kembalikan ke halaman login dengan pesan error
-        return redirect()->back()->withErrors(['loginError' => 'Nama pembeli atau password salah.']);
-    }
+}
 }

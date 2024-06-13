@@ -13,21 +13,34 @@ class barangController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
+        $jenis_barang = $request->input('jenis_barang');
         
-        $barangs = Barang::when($search, function ($query) use ($search) {
-            return $query->where('nama_barang', 'like', "%$search%");
-        })->get();
-        $barangs = Barang::when($search, function ($query) use ($search) {
-            return $query->where('jenis_barang', 'like', "%$search%");
-        })->get();
-        return view('Transaksi/index', compact('barangs'));
+        $barangs = Barang::query();
+    
+        if ($search) {
+            $barangs->where(function ($query) use ($search) {
+                $query->where('jenis_barang', 'like', "%$search%")
+                      ->orWhere('nama_barang', 'like', "%$search%");
+            });
+        }
+    
+        if ($jenis_barang) {
+            $barangs->where('jenis_barang', $jenis_barang);
+        }
+    
+        $barangs = $barangs->get();
+
+
+    $makanan = $barangs->where('jenis_barang', 'Makanan');
+    $minuman = $barangs->where('jenis_barang', 'Minuman');
+
+        return view('Transaksi/halamanPembelian', compact('barangs', 'makanan', 'minuman'));
     }
 
     public function HalamanTambahBarang()
     {   
-        
         $penjuals = Penjual::all();
-        return view('Penjual/tambahbarang/tambahBarang', ['penjuals' => $penjuals]);
+        return view('Penjual/tambahbarang/tambahBarang', compact('penjuals'));
     }
 
     public function tambahBarang(Request $request)
@@ -64,20 +77,11 @@ class barangController extends Controller
         // Redirect ke halaman tertentu setelah penyimpanan berhasil
         return redirect()->route('halamanPenjual')->with('success', 'Barang berhasil ditambahkan.');
     }
-    public function destroy($id)
-    {
-        // Ambil data keranjang dari sesi
-        $keranjang = session()->get('keranjang', []);
-
-        // Filter keranjang untuk menghapus barang yang dihapus
-        $newKeranjang = array_filter($keranjang, function($item) use ($id) {
-            return $item['id_barang'] != $id;
-        });
-
-        // Update sesi dengan keranjang baru
-        session()->put('keranjang', $newKeranjang);
-
-        // Redirect ke halaman keranjang dengan pesan sukses
-        return redirect()->route('HalamanKeranjang')->with('success', 'Barang berhasil dihapus dari keranjang');
+   
+    public function HalamanDefinisiBarang($id)
+    { 
+        $barang = Barang::findOrFail($id); // Mengambil barang berdasarkan ID
+       
+        return view('transaksi/halamanDefinisi', compact('barang'));
     }
 }

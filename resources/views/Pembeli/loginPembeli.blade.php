@@ -1,9 +1,7 @@
 <html>
-    <head>
-        <title>
-            Halaman Login Pembeli
-        </title>
-            <style>
+<head>
+    <title>Halaman Login Admin</title>
+    <style>
         body {
             background-image: url('/gambar/Foto Amay.jpg');
         background-size: 100% 100%;
@@ -59,58 +57,34 @@
             background-color: #45a049;
         }
 
-        footer{background-color: #FFA500;
-                    padding: 10px;
-                    position: fixed;
-                            bottom: 0;
-                        width: 100%;}
+        footer{
+                background-color: #FFA500;
+                padding: 5px;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                text-align: center;}
 
-                    header{background-color: #FFA500;
-                    padding: 10px;
-                            top: 0;
-                        width: 100%;}
-
-                        .home{
-            position: fixed;
-            top: 7%;
-            left: 1%;
-            color: white;
-            padding: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        }
-        .arrowleft{
-        border: solid white;
-        border-width: 0 3px 3px 0;
-        display: inline-block;
-        padding: 3px;
-        transform: rotate(135deg);
-        -webkit-transform: rotate(135deg);
-        } 
-            </style>
-    </head>
-    <body>
-
-@if ($errors->any())
-        <div>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    <div  class="home" >
-        <a href="{{ route('Pembelian') }}"><i class="arrowleft"></i></a>
-        </div>  
+         header{
+                background-color: #FFA500;
+                text-align: center;
+                padding: 5px;
+                top: 0;
+                width: 100%;}
+    </style>
+</head>
+<body>
     <header>@ Amay Kantin</header>
 <form method="POST" action="{{ route('HalamanLoginPembeli') }}">
     @csrf
-    <h1>Pembeli Log In</h1>
-    <label for="email">Username:</label>
-    <input type="text" name="nama_pembeli" required>
+
+        <h1>Pembeli</h1>
+
+    <label for="email">Email:</label>
+    <input type="email" name="email" required>
 
     <label for="password">Password:</label>
-    <input type="password" name="password_pembeli" required>
+    <input type="password" name="password" required>
 
     <button type="submit">Login</button>
 </form>

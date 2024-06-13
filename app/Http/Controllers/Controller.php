@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Barang;
-
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
@@ -15,10 +16,13 @@ class Controller extends BaseController
         return view('Transaksi.index', compact('id', 'barangs'));
     }
 
-    public function index()
+    public function halamanPembelian()
     {
+        $makanan = Barang::where('jenis_barang', 'Makanan')->get();
+        $minuman = Barang::where('jenis_barang', 'Minuman')->get();
+        $user = User::all();
         $barangs = Barang::all(); // Ambil semua data barang
-        return view('Transaksi.index', compact('barangs')); 
+        return view('Transaksi.halamanPembelian', compact('barangs', 'user', 'makanan', 'minuman')); 
     }
 }
 

@@ -1,16 +1,21 @@
+<!-- resources/views/admin/users/edit.blade.php -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Admin</title>
+    <title>Edit Pengguna</title>
     <style>
+        /* General styles */
         body {
             font-family: Arial, sans-serif;
             background-color: white;
             margin: 0;
             padding: 0;
         }
+
+        /* Header styles */
         header {
             display: flex;
             align-items: center;
@@ -19,14 +24,17 @@
             padding: 10px 20px;
             border-bottom: 1px solid #e0e0e0;
         }
+
         nav {
             display: flex;
             align-items: center;
         }
+
         .dropdown {
             position: relative;
             display: inline-block;
         }
+
         .dropbtn {
             background-color: #007bff;
             color: white;
@@ -36,6 +44,7 @@
             cursor: pointer;
             border-radius: 20%;
         }
+
         .dropdown-content {
             display: none;
             position: absolute;
@@ -44,64 +53,78 @@
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
         }
+
         .dropdown-content a {
             color: black;
             padding: 12px 16px;
             text-decoration: none;
             display: block;
         }
+
         .dropdown-content a:hover {
             background-color: #ddd;
         }
+
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
         .dropdown:hover .dropbtn {
             background-color: #0056b3;
         }
+
         .logout-link {
             margin-left: 20px;
-        }
-        main {
-            padding: 20px;
-            text-align: center;
-        }
-        a {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 20px;
-            text-decoration: none;
             color: white;
-            background-color: #007BFF;
+            background-color: #007bff;
+            padding: 10px 15px;
+            text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
-        a:hover {
+
+        .logout-link:hover {
             background-color: #0056b3;
         }
-        
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
+
+        /* Main content styles */
+        main {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        table, th, td {
-            border: 1px solid #ddd;
+
+        form {
+            display: flex;
+            flex-direction: column;
         }
-        th, td {
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            margin-bottom: 15px;
             padding: 10px;
-            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
         }
-        th {
+
+        input[type="submit"], button {
             background-color: #4CAF50;
             color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
+
+        input[type="submit"]:hover, button:hover {
+            background-color: #45a049;
         }
-        .img_thumbnail {
-            width: 100px;
-        }
+
+        /* Footer styles */
         footer {
             background-color: #FFA500;
             color: white;
@@ -111,25 +134,36 @@
             width: 100%;
             bottom: 0;
         }
-                                        .tambahbarang{position: fixed;
-                                        bottom : 12%;
-                                        padding:10px;
-                                        right:2%;
-                                        background-color: white;
-                                        box-shadow: 0px 0px 1px 0px black;}
-                                        a{color: black;}
+        .home {
+            position: fixed;
+            top: 8%;
+            left: 1%;
+            color: white;
+            background-color: #337ab7;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .arrowleft {
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            display: inline-block;
+            padding: 3px;
+            transform: rotate(135deg);
+            -webkit-transform: rotate(135deg);
+        }
     </style>
 </head>
 <body>
-<header>
-@if (Auth::check() && Auth::user()->role == 'admin')
-        <h2>Halaman Admin</h2>
+<div class="home">
+    <a href="{{ route('HalamanReadPembeli') }}"><i class="arrowleft"></i></a>
+</div>
+    <header>
+        <h2>Edit Pengguna</h2>
         <nav>
             <div class="dropdown">
                 <button class="dropbtn">Registrasi</button>
                 <div class="dropdown-content">
-                    <a href="{{ route('HalamanRegistrasiUser') }}">Registrasi Pembeli</a>
-                    <a href="{{ route('HalamanRegistrasiPenjual') }}">Registrasi Penjual</a>
+                    <a href="{{ route('HalamanRegistrasiUser') }}">Registrasi</a>
                 </div>
             </div>
             <div class="dropdown">
@@ -148,30 +182,34 @@
                 </a>
             @else
                 <script type="text/javascript">
-                    window.location = "{{ rote('halamanLoginUser') }}"; // Redirect to homepage if not admin
+                    window.location = "{{ url('/') }}"; // Redirect to homepage if not admin
                 </script>
             @endif
-
         </nav>
     </header>
     <main>
-        <h3>Read</h3>
-        <a href="{{ route('HalamanReadBarang') }}">Barang</a>
-        <a href="{{ route('HalamanReadPembeli') }}">Pembeli</a>
-        <a href="{{ route('HalamanReadPenjual') }}">Penjual</a>
+        <h3>Edit Pengguna: {{ $user->name }}</h3>
+        <form action="{{ route('MemperbaruiUsers', $user->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+
+            <label for="name">Nama</label>
+            <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" required>
+
+            <label for="password">Password (kosongkan jika tidak ingin mengubah)</label>
+            <input type="password" id="password" name="password">
+
+            <label for="password_confirmation">Konfirmasi Password</label>
+            <input type="password" id="password_confirmation" name="password_confirmation">
+
+            <input type="submit" value="Update Pengguna">
+        </form>
     </main>
     <footer>
         Hak Cipta &copy; Kantin Amay 2024.
     </footer>
 </body>
-@endif
-@if (Auth::check() && Auth::user()->role == 'pembeli')
-<form id="logout-form-pembeli" action="{{ route('logoutya') }}" method="POST" >
-                    @csrf
-                </form>
-                <a href="#" onclick="event.preventDefault(); if (confirm('Apakah Anda yakin ingin logout?')) { document.getElementById('logout-form-pembeli').submit(); }">
-                    Silahkan Logout 
-                </a>
-                                        </form>
-@endif
 </html>

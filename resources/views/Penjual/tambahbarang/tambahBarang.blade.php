@@ -96,9 +96,11 @@ footer{background-color: #FFA500;
 </head>
 <body>
 
-<div  class="home" >
-        <a href="{{ route('halamanPenjual') }}"><i class="arrowleft"></i></a>
-        </div>  
+<div class="home">
+    <a href="{{ Auth::check() && Auth::user()->role == 'admin' ? route('halamanUser') : route('halamanPenjual') }}">
+        <i class="arrowleft"></i>
+    </a>
+</div> 
 
 <header>@ Amay Kantin</header>
     <h1>Tambah Barang</h1>
@@ -146,7 +148,7 @@ footer{background-color: #FFA500;
             <input type="number" id="jumlah_barang" name="jumlah_barang" value="{{ old('jumlah_barang') }}" required>
         </div>
         <div style="text-align: center;">
-            <button type="submit" onclick="return confirm('Apakah Anda Sudah Benar??')" >Simpan</button>
+            <button type="submit" onclick="return confirm('Apakah Data Sudah Benar??')" >Simpan</button>
         </div>
     </form>
 </body>
