@@ -20,7 +20,7 @@ class userController extends Controller
     }
 
     public function registrasiUser(Request $request)
-    {   
+    {
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -37,7 +37,7 @@ class userController extends Controller
 
         return redirect()->route('halamanUser')->with('success', 'Registrasi sukses. Sekarang kamu bisa login.');
     }
-    
+
     public function HalamanLoginUser()
     {
         return view('User/loginUser');
@@ -60,7 +60,7 @@ class userController extends Controller
 
         // Ambil ID user setelah login
         $id_user = $user->id;
-
+        
         // Redirect ke halaman pembelian setelah login
         return redirect()->route('halamanUser', ['id' => $id_user]);
     }
@@ -95,19 +95,19 @@ public function logoutUser(Request $request)
     public function barangdestroy(Barang $barang)
     {
         $barang->delete();
-        
+
         return redirect()->route('halamanUser')->with('success', 'Data barang berhasil dihapus!');
     }
     public function penjualdestroy(Penjual $penjual)
     {
         $penjual->delete();
-        
+
         return redirect()->route('HalamanReadPenjual')->with('success', 'Data penjual berhasil dihapus!');
     }
     public function userdestroy(User $user)
     {
         $user->delete();
-        
+
         return redirect()->route('HalamanReadPembeli')->with('success', 'Data pembeli berhasil dihapus!');
     }
 
@@ -116,34 +116,34 @@ public function logoutUser(Request $request)
         $barangs = Barang::all();
         return view("User/Read Data/HalamanBarang", compact("barangs"));
     }
-    
+
     public function HalamanReadPembeli()
     {
         // Initialize the base query
         $query = User::query();
-    
+
         // Check if a specific role filter is applied
         if (isset($role)) {
             $query->where('role', $role);
         }
-    
+
         // Get the list of users based on the query
         $users = $query->get();
-    
+
         // Filter users with the role 'pembeli'
         $pembeli = $users->where('role', 'pembeli');
-    
+
         // Pass both the full list of users and the filtered list to the view
         return view("User/Read Data/HalamanPembeli", compact("users", "pembeli"));
     }
-    
-    
+
+
     public function HalamanReadPenjual()
     {
         $penjuals = Penjual::all();
         return view("User/Read Data/HalamanPenjual", compact("penjuals"));
     }
-    
+
     public function HalamanUbahBarang($id)
     {
         $barang = Barang::findOrFail($id);
@@ -151,7 +151,7 @@ public function logoutUser(Request $request)
     }
 
     // Method to handle the update request
-   
+
 public function MemperbaruiBarangs(Request $request, $id)
 {
     $barang = Barang::findOrFail($id);
@@ -183,8 +183,8 @@ public function MemperbaruiBarangs(Request $request, $id)
     $barang->update($validatedData);
 
     return redirect()->route('HalamanReadBarang')->with('success', 'Barang updated successfully.');
-    }   
-  
+    }
+
     public function HalamanUbahUser($id)
     {
         $user = User::findOrFail($id);
